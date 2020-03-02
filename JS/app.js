@@ -76,7 +76,7 @@ function productClick(event) {
             totalClicks++;
             firstProduct.views++;
             secondProduct.views++;
-            thirdImage.views++;
+            thirdProduct.views++;
             render();
 
         }
