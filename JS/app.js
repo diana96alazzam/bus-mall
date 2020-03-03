@@ -21,6 +21,23 @@ function Product(name) {
 
 Product.all = [];
 
+function sendProducts() {
+    var productsString = JSON.stringify(Product.all);
+    localStorage.setItem('Products', productsString);
+}
+
+function retrieveProducts() {
+    var productsString = localStorage.getItem('Products');
+    if (productsString) {
+        Product.all = JSON.parse(productsString);
+        render();
+        renderResults();
+        renderChart1();
+    }
+
+
+}
+
 
 for (var i = 0; i < productsNames.length; i++) {
     new Product(productsNames[i]);
@@ -28,15 +45,14 @@ for (var i = 0; i < productsNames.length; i++) {
 
 
 
-var firstProduct, secondProduct, thirdProduct;
-
-
-
-
 var unBiasedArray1 = [];
-var unBiasedArray2 = [];
 
 
+retrieveProducts();
+
+
+
+var firstProduct, secondProduct, thirdProduct;
 
 function render() {
 
@@ -84,6 +100,7 @@ render();
 images.addEventListener('click', productClick);
 var totalClicks = 0;
 
+
 function productClick(event) {
 
     if (totalClicks < 25) {
@@ -110,6 +127,8 @@ function productClick(event) {
             firstProduct.views++;
             secondProduct.views++;
             thirdProduct.views++;
+            sendProducts()
+
 
         }
 
@@ -135,6 +154,7 @@ function productClick(event) {
                 console.log(unBiasedArray1);
                 console.log(newArray);
             }
+
         }
 
 
