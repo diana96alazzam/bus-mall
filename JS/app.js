@@ -45,7 +45,6 @@ for (var i = 0; i < productsNames.length; i++) {
 
 
 
-var unBiasedArray1 = [];
 
 
 retrieveProducts();
@@ -56,43 +55,56 @@ var firstProduct, secondProduct, thirdProduct;
 
 function render() {
 
+    var unBiasedArray1 = [];
 
     firstProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
     secondProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
     thirdProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
 
-    unBiasedArray1.push(firstProduct, secondProduct, thirdProduct);
+    unBiasedArray1.push(firstProduct.imgPath, secondProduct.imgPath, thirdProduct.imgPath);
 
 
 
+    while (firstProduct.imgPath === thirdProduct.imgPath || firstProduct.imgPath === secondProduct.imgPath || thirdProduct.imgPath === secondProduct.imgPath) {
 
-    while (firstProduct === secondProduct || secondProduct === thirdProduct || thirdProduct === firstProduct) {
+        var unBiasedArray1 = [];
+
 
         firstProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
         secondProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
         thirdProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
-        unBiasedArray1.push(firstProduct, secondProduct, thirdProduct);
 
+        unBiasedArray1.push(firstProduct.imgPath, secondProduct.imgPath, thirdProduct.imgPath);
+
+    }
+
+    if (totalClicks > 0 && (unBiasedArray1.includes(firstProduct.imgPath) || unBiasedArray1.includes(secondProduct.imgPath) || unBiasedArray1.includes(thirdProduct.imgPath))) {
+
+        // var unBiasedArray1 = [];
+
+        firstProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+        secondProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+        thirdProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+
+        unBiasedArray1.push(firstProduct.imgPath, secondProduct.imgPath, thirdProduct.imgPath);
 
     }
 
 
-    firstImage.setAttribute('alt', firstProduct.productName);
-    firstImage.setAttribute('src', firstProduct.imgPath);
-    firstImage.setAttribute('title', firstProduct.productName);
 
-    secondImage.setAttribute('alt', secondProduct.productName);
-    secondImage.setAttribute('src', secondProduct.imgPath);
-    secondImage.setAttribute('title', secondProduct.productName);
+    firstImage.setAttribute('src', unBiasedArray1[0]);
+    firstImage.setAttribute('alt', unBiasedArray1[0]);
+    firstImage.setAttribute('title', unBiasedArray1[0]);
 
-    thirdImage.setAttribute('alt', thirdProduct.productName);
-    thirdImage.setAttribute('src', thirdProduct.imgPath);
-    thirdImage.setAttribute('title', thirdProduct.productName);
+    secondImage.setAttribute('src', unBiasedArray1[1]);
+    secondImage.setAttribute('alt', unBiasedArray1[1]);
+    secondImage.setAttribute('title', unBiasedArray1[1]);
 
-
+    thirdImage.setAttribute('src', unBiasedArray1[[2]]);
+    thirdImage.setAttribute('alt', unBiasedArray1[2]);
+    thirdImage.setAttribute('title', unBiasedArray1[2]);
 
 }
-
 
 
 render();
@@ -107,18 +119,18 @@ function productClick(event) {
         if (event.target.id !== 'images') {
             if (event.target.id === 'firstImg') {
                 firstProduct.clicks++;
-                unBiasedArray1.push(firstProduct, secondProduct, thirdProduct);
+                // unBiasedArray1.push(firstProduct, secondProduct, thirdProduct);
 
 
             } else if (event.target.id === 'secondImg') {
                 secondProduct.clicks++;
-                unBiasedArray1.push(firstProduct, secondProduct, thirdProduct);
+                // unBiasedArray1.push(firstProduct, secondProduct, thirdProduct);
 
 
 
             } else if (event.target.id === 'thirdImg') {
                 thirdProduct.clicks++;
-                unBiasedArray1.push(firstProduct, secondProduct, thirdProduct);
+                // unBiasedArray1.push(firstProduct, secondProduct, thirdProduct);
 
 
             }
@@ -132,30 +144,8 @@ function productClick(event) {
 
         }
 
-        var newArray = [...new Set(unBiasedArray1)];
-        unBiasedArray1 = unBiasedArray1.splice(3);
 
-
-        newArray = unBiasedArray1.slice(0, 3);
-
-        // console.log(unBiasedArray1);
-        // console.log(newArray);
-
-        for (var i = 0; i < 3; i++) {
-            // unBiasedArray1 = unBiasedArray1.splice(3);
-
-
-            while (unBiasedArray1[0] === newArray[i] || unBiasedArray1[1] === newArray[i] || unBiasedArray1 === newArray[i]) {
-                unBiasedArray1 = unBiasedArray1.splice(3)
-
-                render();
-
-
-                console.log(unBiasedArray1);
-                console.log(newArray);
-            }
-
-        }
+        render();
 
 
 
