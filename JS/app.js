@@ -43,7 +43,19 @@ for (var i = 0; i < productsNames.length; i++) {
     new Product(productsNames[i]);
 }
 
+function check() {
 
+    while (firstProduct === thirdProduct || firstProduct === secondProduct || thirdProduct === secondProduct) {
+        var unBiasedArray1 = [];
+        firstProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+        secondProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+        thirdProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+
+    }
+
+
+
+}
 
 
 
@@ -54,55 +66,122 @@ retrieveProducts();
 var firstProduct, secondProduct, thirdProduct;
 
 function render() {
-
     var unBiasedArray1 = [];
+
 
     firstProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
     secondProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
     thirdProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
 
-    unBiasedArray1.push(firstProduct.imgPath, secondProduct.imgPath, thirdProduct.imgPath);
+    unBiasedArray1.push(firstProduct, secondProduct, thirdProduct);
 
 
 
-    while (firstProduct.imgPath === thirdProduct.imgPath || firstProduct.imgPath === secondProduct.imgPath || thirdProduct.imgPath === secondProduct.imgPath) {
+    while (firstProduct === thirdProduct || firstProduct === secondProduct || thirdProduct === secondProduct) {
 
-        var unBiasedArray1 = [];
+         unBiasedArray1 = [];
 
 
         firstProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
         secondProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
         thirdProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+        unBiasedArray1.push(firstProduct, secondProduct, thirdProduct);
 
-        unBiasedArray1.push(firstProduct.imgPath, secondProduct.imgPath, thirdProduct.imgPath);
 
-    }
-
-    if (totalClicks > 0 && (unBiasedArray1.includes(firstProduct.imgPath) || unBiasedArray1.includes(secondProduct.imgPath) || unBiasedArray1.includes(thirdProduct.imgPath))) {
-
-        // var unBiasedArray1 = [];
-
-        firstProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
-        secondProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
-        thirdProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
-
-        unBiasedArray1.push(firstProduct.imgPath, secondProduct.imgPath, thirdProduct.imgPath);
+        console.log(firstProduct);
+        console.log(unBiasedArray1);
 
     }
 
 
 
-    firstImage.setAttribute('src', unBiasedArray1[0]);
-    firstImage.setAttribute('alt', unBiasedArray1[0]);
-    firstImage.setAttribute('title', unBiasedArray1[0]);
+    if (totalClicks > 0) {
+        console.log('muna1');
+        console.log("firstFalse", unBiasedArray1.includes(firstProduct));
 
-    secondImage.setAttribute('src', unBiasedArray1[1]);
-    secondImage.setAttribute('alt', unBiasedArray1[1]);
-    secondImage.setAttribute('title', unBiasedArray1[1]);
+        while (unBiasedArray1.includes(firstProduct)) {
+            console.log('diana1');
 
-    thirdImage.setAttribute('src', unBiasedArray1[[2]]);
-    thirdImage.setAttribute('alt', unBiasedArray1[2]);
-    thirdImage.setAttribute('title', unBiasedArray1[2]);
+
+            // var unBiasedArray1 = [];
+
+            firstProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+
+
+            console.log("first", unBiasedArray1);
+            unBiasedArray1.shift();
+
+        }unBiasedArray1.push(firstProduct);
+
+        
+    }
+
+    if (totalClicks > 0) {
+        console.log('muna2');
+        console.log("secondFalse", unBiasedArray1.includes(secondProduct));
+
+        while (unBiasedArray1.includes(secondProduct)) {
+
+            console.log('diana2');
+
+            // var unBiasedArray1 = [];
+
+            secondProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+
+            console.log("second", unBiasedArray1);
+
+            unBiasedArray1.shift();
+
+        }unBiasedArray1.push(secondProduct);
+
+
+    }
+
+    if (totalClicks > 0) {
+
+        console.log('muna');
+        console.log("thirdFalse", unBiasedArray1.includes(thirdProduct));
+
+        while (unBiasedArray1.includes(thirdProduct)) {
+            console.log('diana3');
+
+
+            // var unBiasedArray1 = [];
+
+            thirdProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+
+            console.log("third", unBiasedArray1);
+            unBiasedArray1.shift()
+
+        }unBiasedArray1.push(thirdProduct)
+
+    }
+
+
+
+    // unBiasedArray1.push(firstProduct, secondProduct, thirdProduct);
+    // console.log(unBiasedArray1);
+    // while (unBiasedArray1.length > 3) {
+    //     unBiasedArray1.shift();
+    //     console.log(unBiasedArray1);
+
+    // }
+
+
+
+
+
+    firstImage.setAttribute('src', firstProduct.imgPath);
+    firstImage.setAttribute('alt', firstProduct.imgPath);
+    firstImage.setAttribute('title', firstProduct.imgPath);
+
+    secondImage.setAttribute('src', secondProduct.imgPath);
+    secondImage.setAttribute('alt', secondProduct.imgPath);
+    secondImage.setAttribute('title', secondProduct.imgPath);
+
+    thirdImage.setAttribute('src', thirdProduct.imgPath);
+    thirdImage.setAttribute('alt', thirdProduct.imgPath);
+    thirdImage.setAttribute('title', thirdProduct.imgPath);
 
 }
 
