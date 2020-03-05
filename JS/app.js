@@ -66,108 +66,42 @@ retrieveProducts();
 var firstProduct, secondProduct, thirdProduct;
 
 function render() {
-    var unBiasedArray1 = [];
-
-
-    firstProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
-    secondProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
-    thirdProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
-
-    unBiasedArray1.push(firstProduct, secondProduct, thirdProduct);
-
-
-
-    while (firstProduct === thirdProduct || firstProduct === secondProduct || thirdProduct === secondProduct) {
-
-         unBiasedArray1 = [];
-
-
-        firstProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
-        secondProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
-        thirdProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
-        unBiasedArray1.push(firstProduct, secondProduct, thirdProduct);
-
-
-        console.log(firstProduct);
-        console.log(unBiasedArray1);
-
-    }
-
-
-
-    if (totalClicks > 0) {
-        console.log('muna1');
-        console.log("firstFalse", unBiasedArray1.includes(firstProduct));
-
-        while (unBiasedArray1.includes(firstProduct)) {
-            console.log('diana1');
-
-
-            // var unBiasedArray1 = [];
-
-            firstProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
-
-
-            console.log("first", unBiasedArray1);
-            unBiasedArray1.shift();
-
-        }unBiasedArray1.push(firstProduct);
 
         
-    }
+    var unBiasedArray1 = [firstProduct, secondProduct, thirdProduct];
 
-    if (totalClicks > 0) {
-        console.log('muna2');
-        console.log("secondFalse", unBiasedArray1.includes(secondProduct));
+    do {
+        firstProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+        console.log('first', firstProduct);
 
-        while (unBiasedArray1.includes(secondProduct)) {
-
-            console.log('diana2');
-
-            // var unBiasedArray1 = [];
-
-            secondProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
-
-            console.log("second", unBiasedArray1);
-
-            unBiasedArray1.shift();
-
-        }unBiasedArray1.push(secondProduct);
+    } while (unBiasedArray1.includes(firstProduct)) unBiasedArray1.push(firstProduct);
 
 
-    }
+    do {
+        secondProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+        console.log('second', secondProduct);
+    } while (unBiasedArray1.includes(secondProduct)) unBiasedArray1.push(secondProduct);
 
-    if (totalClicks > 0) {
+    do {
+        thirdProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+        console.log('third', thirdProduct);
 
-        console.log('muna');
-        console.log("thirdFalse", unBiasedArray1.includes(thirdProduct));
+    } while (unBiasedArray1.includes(thirdProduct)) unBiasedArray1.push(thirdProduct);
 
-        while (unBiasedArray1.includes(thirdProduct)) {
-            console.log('diana3');
+    console.log(unBiasedArray1);
 
 
-            // var unBiasedArray1 = [];
+    if (firstProduct === thirdProduct || firstProduct === secondProduct || thirdProduct === secondProduct) {
 
-            thirdProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
-
-            console.log("third", unBiasedArray1);
-            unBiasedArray1.shift()
-
-        }unBiasedArray1.push(thirdProduct)
+        console.log('its not working', firstProduct, secondProduct, thirdProduct);
 
     }
 
+    while (unBiasedArray1.length > 3) {
+        unBiasedArray1.shift();
 
-
-    // unBiasedArray1.push(firstProduct, secondProduct, thirdProduct);
-    // console.log(unBiasedArray1);
-    // while (unBiasedArray1.length > 3) {
-    //     unBiasedArray1.shift();
-    //     console.log(unBiasedArray1);
-
-    // }
-
-
+    }
+    console.log(unBiasedArray1);
 
 
 
