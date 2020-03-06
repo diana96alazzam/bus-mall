@@ -2,6 +2,9 @@
 
 var productsNames = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'usb.gif', 'water-can.jpg', 'wine-glass.jpg'];
 
+var clicksArray = [];
+var viewsArray = [];
+
 var images = document.querySelector('#images');
 var firstImage = document.querySelector('#firstImg');
 var secondImage = document.querySelector('#secondImg');
@@ -18,43 +21,103 @@ function Product(name) {
 
 Product.all = [];
 
+function sendProducts() {
+    var productsString = JSON.stringify(Product.all);
+    localStorage.setItem('Products', productsString);
+}
+
+function retrieveProducts() {
+    var productsString = localStorage.getItem('Products');
+    if (productsString) {
+        Product.all = JSON.parse(productsString);
+        render();
+        renderResults();
+        renderChart1();
+    }
+
+
+}
+
 
 for (var i = 0; i < productsNames.length; i++) {
     new Product(productsNames[i]);
 }
 
+function check() {
+
+    while (firstProduct === thirdProduct || firstProduct === secondProduct || thirdProduct === secondProduct) {
+        var unBiasedArray1 = [];
+        firstProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+        secondProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+        thirdProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+
+    }
+
+
+
+}
+
+
+
+retrieveProducts();
+
 
 
 var firstProduct, secondProduct, thirdProduct;
 
-
 function render() {
-    firstProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
-    secondProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
-    thirdProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
 
+        
+    var unBiasedArray1 = [firstProduct, secondProduct, thirdProduct];
 
-    while (firstProduct === secondProduct || secondProduct === thirdProduct || thirdProduct === firstProduct) {
+    do {
         firstProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+        console.log('first', firstProduct);
+
+    } while (unBiasedArray1.includes(firstProduct)) unBiasedArray1.push(firstProduct);
+
+
+    do {
         secondProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+        console.log('second', secondProduct);
+    } while (unBiasedArray1.includes(secondProduct)) unBiasedArray1.push(secondProduct);
+
+    do {
         thirdProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
+        console.log('third', thirdProduct);
+
+    } while (unBiasedArray1.includes(thirdProduct)) unBiasedArray1.push(thirdProduct);
+
+    console.log(unBiasedArray1);
+
+
+    if (firstProduct === thirdProduct || firstProduct === secondProduct || thirdProduct === secondProduct) {
+
+        console.log('its not working', firstProduct, secondProduct, thirdProduct);
+
     }
 
+    while (unBiasedArray1.length > 3) {
+        unBiasedArray1.shift();
 
-    firstImage.setAttribute('alt', firstProduct.productName);
+    }
+    console.log(unBiasedArray1);
+
+
+
     firstImage.setAttribute('src', firstProduct.imgPath);
-    firstImage.setAttribute('title', firstProduct.productName);
+    firstImage.setAttribute('alt', firstProduct.imgPath);
+    firstImage.setAttribute('title', firstProduct.imgPath);
 
-    secondImage.setAttribute('alt', secondProduct.productName);
     secondImage.setAttribute('src', secondProduct.imgPath);
-    secondImage.setAttribute('title', secondProduct.productName);
+    secondImage.setAttribute('alt', secondProduct.imgPath);
+    secondImage.setAttribute('title', secondProduct.imgPath);
 
-    thirdImage.setAttribute('alt', thirdProduct.productName);
     thirdImage.setAttribute('src', thirdProduct.imgPath);
-    thirdImage.setAttribute('title', thirdProduct.productName);
+    thirdImage.setAttribute('alt', thirdProduct.imgPath);
+    thirdImage.setAttribute('title', thirdProduct.imgPath);
 
 }
-
 
 
 render();
@@ -62,28 +125,53 @@ render();
 images.addEventListener('click', productClick);
 var totalClicks = 0;
 
+
 function productClick(event) {
 
     if (totalClicks < 25) {
         if (event.target.id !== 'images') {
             if (event.target.id === 'firstImg') {
                 firstProduct.clicks++;
+                // unBiasedArray1.push(firstProduct, secondProduct, thirdProduct);
+
+
             } else if (event.target.id === 'secondImg') {
                 secondProduct.clicks++;
+                // unBiasedArray1.push(firstProduct, secondProduct, thirdProduct);
+
+
+
             } else if (event.target.id === 'thirdImg') {
                 thirdProduct.clicks++;
+                // unBiasedArray1.push(firstProduct, secondProduct, thirdProduct);
+
+
             }
+
             totalClicks++;
             firstProduct.views++;
             secondProduct.views++;
             thirdProduct.views++;
-            render();
+            sendProducts()
+
 
         }
+
+
+        render();
+
+
+
+
+
+
     } else {
         images.removeEventListener('click', productClick);
         renderResults();
+        renderChart1();
     }
+
+
 }
 
 function renderResults() {
@@ -115,7 +203,7 @@ function renderResults() {
         tableResult.appendChild(tr2Result);
 
         var td1Result = document.createElement('td');
-        td1Result.textContent = Product.all[i].name;
+        td1Result.textContent = (Product.all[i].name.split('.')[0]);
         tr2Result.appendChild(td1Result);
 
         var td2Result = document.createElement('td');
@@ -126,11 +214,15 @@ function renderResults() {
         td3Result.textContent = Product.all[i].clicks;
         tr2Result.appendChild(td3Result);
 
+        clicksArray.push(Product.all[i].clicks);
+        viewsArray.push(Product.all[i].views);
+
+
+
         // console.log(Product.all[i].name);
 
         // tdResult.textContent = `${Product.all[i].name}: ${Product.all[i].clicks} clicks and ${Product.all[i].views} views.`;
     }
-
 
 
 }
@@ -138,4 +230,39 @@ function renderResults() {
 
 function globalRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+
+function renderChart1() {
+
+    var ctx = document.getElementById('productChart1').getContext('2d');
+    var productChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: productsNames,
+            datasets: [{
+                label: "clicks",
+                backgroundColor: "blue",
+                data: clicksArray
+            }, {
+                label: "views",
+                backgroundColor: "gray",
+                data: viewsArray,
+
+
+            }],
+
+
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
 }
