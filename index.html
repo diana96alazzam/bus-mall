@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bus mall</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Sarpanch:700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Chakra+Petch&display=swap" rel="stylesheet">
+
+
     <link rel="stylesheet" href="CSS/reset.css">
     <link rel="stylesheet" href="CSS/style.css">
 </head>
@@ -11,34 +17,63 @@
 <body>
     <header>
 
+        <div id="logo">
+            <img src="IMG/logo.png" alt="websiteLogo">
+        </div>
+        <div id="websiteTitle">
+            <h1>BusMall</h1>
+        </div>
+
+        <div id="navOptions">
+            <nav>
+                <ul>
+                    <li><a href="">Start Shopping!</a></li>
+                    <li><a href="">Contact us</a></li>
+
+                </ul>
+            </nav>
+        </div>
+
+
     </header>
-    
+
     <main>
-        <section id="images">
-            <img id="firstImg" src="" alt="">
-            <img id="secondImg" src="" alt="">
-            <img id="thirdImg" src="" alt="">
+        <section id="mainTitle">
+            <h1> Which product, of these would you most likely to purchase?</h1>
+            <p> Please finish 25 selection and the results will show.</p>
+
+            <div id="images">
+                <img id="firstImg" src="" alt="">
+                <img id="secondImg" src="" alt="">
+                <img id="thirdImg" src="" alt="">
+            </div>
         </section>
 
-        <table id='results'>
+        <section id="theResults">
 
-        </table>
+            <h1>Results</h1>
+            <table id='results'></table>
+            <div id="canvasCont">
+                <canvas id="productChart1" width="800" height="700"></canvas>
 
-        <canvas id="productChart1" width="800" height="700"></canvas>
+            </div>
 
-
+        </section>
 
     </main>
 
+
     <footer>
+        <!-- <p>Copyright©2020 Diana Al-azzam.All rights reserved.</p> -->
 
     </footer>
 
-    
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-    <script src= "JS/app.js"></script>
+    <script src="JS/app.js"></script>
 
 
-    
+
 </body>
+
 </html>

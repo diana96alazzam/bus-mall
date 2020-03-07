@@ -1,16 +1,19 @@
 "use strict";
-
+// declare an array for the products names
 var productsNames = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg', 'bubblegum.jpg', 'chair.jpg', 'cthulhu.jpg', 'dog-duck.jpg', 'dragon.jpg', 'pen.jpg', 'pet-sweep.jpg', 'scissors.jpg', 'shark.jpg', 'sweep.png', 'tauntaun.jpg', 'unicorn.jpg', 'usb.gif', 'water-can.jpg', 'wine-glass.jpg'];
 
+// declare an empty array to push the number of clicks and views
 var clicksArray = [];
 var viewsArray = [];
 
+// get the IDs for each image and store it in a viriable
 var images = document.querySelector('#images');
 var firstImage = document.querySelector('#firstImg');
 var secondImage = document.querySelector('#secondImg');
 var thirdImage = document.querySelector('#thirdImg');
 
 
+// craete a constructor for the products and store them in an array
 function Product(name) {
     this.name = name;
     this.imgPath = `IMG/${this.name}`;
@@ -21,6 +24,8 @@ function Product(name) {
 
 Product.all = [];
 
+
+// send the products for the local storage then retrieve them 
 function sendProducts() {
     var productsString = JSON.stringify(Product.all);
     localStorage.setItem('Products', productsString);
@@ -34,42 +39,30 @@ function retrieveProducts() {
         renderResults();
         renderChart1();
     }
-
-
 }
 
 
+// create new object for each product
 for (var i = 0; i < productsNames.length; i++) {
     new Product(productsNames[i]);
 }
-
-function check() {
-
-    while (firstProduct === thirdProduct || firstProduct === secondProduct || thirdProduct === secondProduct) {
-        var unBiasedArray1 = [];
-        firstProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
-        secondProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
-        thirdProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
-
-    }
-
-
-
-}
-
 
 
 retrieveProducts();
 
 
-
+// declare variables for the products for each image to be stored in 
 var firstProduct, secondProduct, thirdProduct;
+
 
 function render() {
 
-        
+
+    // declare an array that stores the values of the for each product to prevent them from repeating     
     var unBiasedArray1 = [firstProduct, secondProduct, thirdProduct];
 
+
+    // give a random product for first image and then keep trying if its repeated
     do {
         firstProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
         console.log('first', firstProduct);
@@ -77,11 +70,14 @@ function render() {
     } while (unBiasedArray1.includes(firstProduct)) unBiasedArray1.push(firstProduct);
 
 
+    // give a random product for second image and then keep trying if its repeated
     do {
         secondProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
         console.log('second', secondProduct);
     } while (unBiasedArray1.includes(secondProduct)) unBiasedArray1.push(secondProduct);
 
+
+    // give a random product for third image and then keep trying if its repeated
     do {
         thirdProduct = Product.all[globalRandomNumber(0, Product.all.length - 1)];
         console.log('third', thirdProduct);
@@ -90,13 +86,14 @@ function render() {
 
     console.log(unBiasedArray1);
 
-
+    
+    // check if the images are repeted in the same round(just to make sure)
     if (firstProduct === thirdProduct || firstProduct === secondProduct || thirdProduct === secondProduct) {
 
         console.log('its not working', firstProduct, secondProduct, thirdProduct);
-
     }
 
+    // remove the first 3 indexes from the the array if they are more than that
     while (unBiasedArray1.length > 3) {
         unBiasedArray1.shift();
 
@@ -104,7 +101,7 @@ function render() {
     console.log(unBiasedArray1);
 
 
-
+    // set attributes for each image
     firstImage.setAttribute('src', firstProduct.imgPath);
     firstImage.setAttribute('alt', firstProduct.imgPath);
     firstImage.setAttribute('title', firstProduct.imgPath);
@@ -122,10 +119,13 @@ function render() {
 
 render();
 
+// add event listner when clicking on an image
 images.addEventListener('click', productClick);
+
+// declare a variable to count total clicks
 var totalClicks = 0;
 
-
+// event listener fuction
 function productClick(event) {
 
     if (totalClicks < 25) {
@@ -157,13 +157,7 @@ function productClick(event) {
 
         }
 
-
         render();
-
-
-
-
-
 
     } else {
         images.removeEventListener('click', productClick);
@@ -171,9 +165,9 @@ function productClick(event) {
         renderChart1();
     }
 
-
 }
 
+// table render function
 function renderResults() {
 
     var tableResult = document.getElementById('results');
@@ -227,13 +221,13 @@ function renderResults() {
 
 }
 
-
+// global function to give a random number
 function globalRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 
-
+// chart render fuction
 function renderChart1() {
 
     var ctx = document.getElementById('productChart1').getContext('2d');
@@ -252,7 +246,6 @@ function renderChart1() {
 
 
             }],
-
 
         },
         options: {
